@@ -9,8 +9,9 @@ from langchain.llms import VertexAI
 #from langchain.chat_models import ChatVertexAI
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.embeddings import VertexAIEmbeddings
+from langchain.embeddings import OpenAIEmbeddings,HuggingFaceEmbeddings
+from langchain.embeddings import HuggingFaceInstructEmbeddings
+#from langchain.embeddings import VertexAIEmbeddings
 from langchain.vectorstores import Chroma
 #from langchain.llms import HuggingFacePipeline
 #from langchain.chat_models import ChatOpenAI
@@ -19,19 +20,21 @@ from langchain.chains import ConversationalRetrievalChain,HypotheticalDocumentEm
 #from langchain.document_loaders import PyPDFLoader
 #from langchain.document_loaders import TextLoader
 #from langchain.document_loaders import Docx2txtLoader
+from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 import os
-from index_html import css,bot_template,user_template
+from index_html import css,bot_template,user_template,source_template
 import vertexai
 import re
 from google.oauth2 import service_account
 from google.auth.transport.requests import Request
 import pandas as pd
-from google.cloud import storage
-from st_files_connection import FilesConnection
+import json  
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"C:\Users\ASUS\Downloads\key.json"
 
 load_dotenv()
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"key.json"
+
 
 def get_pdf_text(pdf_docs):
     load_dotenv()
@@ -50,10 +53,10 @@ def get_text_chunks(docs):
     
     #tokenizer = AutoTokenizer.from_pretrained('intfloat/e5-large-v2')
    
-    text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1000,
-        chunk_overlap=100,
-        length_function = len,
+    text_splitter = RecursiveCharacterTextSplitter(        
+    chunk_size=1000,
+    chunk_overlap=100,
+    length_function = len,
     )
     
     
@@ -66,8 +69,10 @@ def get_vectorstore(chunks):
     load_dotenv()
      # Embedding
     #embeddings = OpenAIEmbeddings()
+   
+
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2", 
-                                        model_kwargs={'device': 'cpu'})
+                                       model_kwargs={'device': 'cpu'})
     #embeddings = HuggingFaceEmbeddings(model_name="intfloat/e5-large-v2", 
                                          #model_kwargs={'device': 'cpu'})
     #REQUESTS_PER_MINUTE = 150                                   
@@ -83,9 +88,7 @@ def get_vectorstore(chunks):
                                  persist_directory=persist_directory)
     
     vectordb.persist()
-    vectordb = None
-    vectordb = Chroma(persist_directory=persist_directory,
-                       embedding_function=embeddings)
+
     return vectordb
 
 
@@ -133,20 +136,22 @@ def get_conversation_cahin(vectordb):
     conversation_chain = ConversationalRetrievalChain.from_llm(
         llm=llm,
         chain_type='stuff',
-        retriever=vectordb.as_retriever(search_kwargs={"k": 3,"fetch_k": 4,"include_metadata": True},search_type ="mmr"),
+        retriever=vectordb.as_retriever(search_kwargs={"k": 4,"fetch_k": 10,"include_metadata": True},search_type ="mmr"),
         memory=memory,
         return_source_documents=True
     )
     return conversation_chain
 
-
 def handle_userinput(user_question):
     #response = st.session_state.conversation({'question': user_question})
     #chat_history = []
     response = st.session_state.conversation({'question': user_question})
+    # Extract the URLs from the Document objects
     #st.write(response['answer'])
-    #st.write(response['source_documents'][1])
-
+    # Add a second sidebar on the right side using CSS
+   
+        
+    #l= response['source_documents']
     #with st.sidebar:
         #for chunk in l:
             #st.write(source_template.replace(
@@ -162,6 +167,9 @@ def handle_userinput(user_question):
         else:
             st.write(bot_template.replace(
                 "{{MSG}}", message.content), unsafe_allow_html=True)
+            
+    # JavaScript function to show the selected document content in the sidebar
+                
 
 
 def list_pdfs_in_folder(folder_path):
@@ -198,9 +206,6 @@ def extract_year_from_filename(filename):
 
     return None
 
-def get_fiscal_quarter(fiscal_year_month):
-    return pd.Period(fiscal_year_month, freq="Q").quarter
-
 
 def get_month_from_filename(filename):
     # Use regular expressions to extract the month abbreviation
@@ -210,6 +215,11 @@ def get_month_from_filename(filename):
         return match.group(1).lower()
     
     return None
+
+#def get_fiscal_quarter(fiscal_year_month):
+    #return pd.Period(fiscal_year_month, freq="Q").quarter
+
+
 
 
 def folder_selector():
@@ -225,7 +235,7 @@ def folder_selector():
                                     #'TCS','TATACONSUM','TATAMOTORS','TATASTEEL','TECHM','TITAN','ULTRACEMCO','UPL','WIPRO'
                           #  ])
     
-    selected_name = st.selectbox("Select a name:",[" ",'Adani Enterprises','Adani Ports & SEZ','Apollo Hospitals','Asian Paints',
+    selected_name = st.selectbox("Select a name:", ['Adani Enterprises','Adani Ports & SEZ','Apollo Hospitals','Asian Paints',
                                                     'Axis Bank','Bajaj Auto','Bajaj Finance',
                                                     'Bajaj Finserv','Bharat Petroleum','Bharti Airtel','Britannia Industries',
                                                     'Cipla','Coal India',"Divi's Laboratories","Dr. Reddy's Laboratories",
@@ -240,7 +250,7 @@ def folder_selector():
     
 
      # Define the folder path based on the selected name
-    folder_path = os.path.join("Concalls", selected_name)
+    folder_path = os.path.join("E:\KaggleXProjects\Concalls", selected_name)
     #print(folder_path)
     # List PDF files in the selected folder
     pdf_files_names = list_pdfs_in_folder(folder_path)
@@ -255,6 +265,7 @@ def folder_selector():
     if pdf_files_names:
         # Get unique years
         unique_years = list(set(years))
+        unique_years.sort(reverse=True)
 
         # Create a dropdown for selecting the year
         selected_year = st.selectbox("Select a Year:", unique_years)
@@ -267,6 +278,7 @@ def folder_selector():
 
             # Get unique months
             unique_months = list(set(months))
+            unique_months.sort(reverse=True)
 
             # Create a dropdown for selecting the month
             selected_month = st.selectbox("Select Month:", unique_months)
@@ -280,13 +292,13 @@ def folder_selector():
 
 
 
+
+
 def main():
-    # Create API client.
-    SERVICE_ACCOUNT_KEY_FILE = r"key.json"
+    SERVICE_ACCOUNT_KEY_FILE = r"C:\Users\ASUS\Downloads\key.json"
 # Create credentials using the service account JSON key file
     credentials = service_account.Credentials.from_service_account_file(
     SERVICE_ACCOUNT_KEY_FILE, scopes=["https://www.googleapis.com/auth/cloud-platform"])
-
 
     # Get an access token from the credentials
     credentials.refresh(Request())
@@ -299,8 +311,8 @@ def main():
     # Initialize session state
     st.set_page_config(page_title="Finpro.ai-FinGainInsights",
                        page_icon=":moneybag:")
-    
-   
+
+
     if "conversation" not in st.session_state:
         st.session_state.conversation = None
     if "chat_history" not in st.session_state:
