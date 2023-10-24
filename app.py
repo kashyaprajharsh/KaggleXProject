@@ -9,7 +9,7 @@ from langchain.llms import VertexAI
 #from langchain.chat_models import ChatVertexAI
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings import OpenAIEmbeddings,HuggingFaceEmbeddings
+from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.embeddings import VertexAIEmbeddings
 from langchain.vectorstores import Chroma
 #from langchain.llms import HuggingFacePipeline
@@ -19,7 +19,6 @@ from langchain.chains import ConversationalRetrievalChain,HypotheticalDocumentEm
 #from langchain.document_loaders import PyPDFLoader
 #from langchain.document_loaders import TextLoader
 #from langchain.document_loaders import Docx2txtLoader
-from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 import os
 from index_html import css,bot_template,user_template
 import vertexai
@@ -27,8 +26,9 @@ import re
 from google.oauth2 import service_account
 from google.auth.transport.requests import Request
 import pandas as pd
+from google.cloud import storage
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"C:\Users\ASUS\Downloads\key.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 
 
 load_dotenv()
 
@@ -282,10 +282,11 @@ def folder_selector():
 
 
 def main():
-    SERVICE_ACCOUNT_KEY_FILE = r"C:\Users\ASUS\Downloads\key.json"
-# Create credentials using the service account JSON key file
-    credentials = service_account.Credentials.from_service_account_file(
-    SERVICE_ACCOUNT_KEY_FILE, scopes=["https://www.googleapis.com/auth/cloud-platform"])
+    # Create API client.
+    credentials = service_account.Credentials.from_service_account_info(
+        st.secrets["gcs"]
+    )
+    client = storage.Client(credentials=credentials)
 
     # Get an access token from the credentials
     credentials.refresh(Request())
