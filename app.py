@@ -283,7 +283,7 @@ def folder_selector():
 def main():
     # Create API client.
     conn = st.experimental_connection('gcs', type=FilesConnection)
-    credentials = service_account.Credentials.from_service_account_info(
+    credentials = service_account.Credentials.from_service_account_file(
         conn, scopes=["https://www.googleapis.com/auth/cloud-platform"]
     )
     client = storage.Client(credentials=credentials)
