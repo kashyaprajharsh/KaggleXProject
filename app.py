@@ -282,7 +282,7 @@ def folder_selector():
 
 def main():
     # Create API client.
-    SERVICE_ACCOUNT_KEY_FILE = r"KaggleXProject/key.json"
+    SERVICE_ACCOUNT_KEY_FILE = "KaggleXProject/key.json"
 # Create credentials using the service account JSON key file
     credentials = service_account.Credentials.from_service_account_file(
     SERVICE_ACCOUNT_KEY_FILE, scopes=["https://www.googleapis.com/auth/cloud-platform"])
