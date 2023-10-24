@@ -27,7 +27,7 @@ from google.oauth2 import service_account
 from google.auth.transport.requests import Request
 import pandas as pd
 from google.cloud import storage
-
+from st_files_connection import FilesConnection
 
 load_dotenv()
 
@@ -282,8 +282,9 @@ def folder_selector():
 
 def main():
     # Create API client.
+    conn = st.experimental_connection('gcs', type=FilesConnection)
     credentials = service_account.Credentials.from_service_account_info(
-        st.secrets(connections.gcs)
+        conn, scopes=["https://www.googleapis.com/auth/cloud-platform"]
     )
     client = storage.Client(credentials=credentials)
 
