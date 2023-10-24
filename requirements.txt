@@ -2,9 +2,7 @@ streamlit
 langchain
 torch
 accelerate
-tiktoken
 ctransformers
-replicate
 pypdf2
 chromadb
 python-dotenv
@@ -12,6 +10,6 @@ transformers
 vertexai
 sentence_transformers
 huggingface_hub
-openai
+gcsfs
 google-cloud-aiplatform  
 google-api-python-client
