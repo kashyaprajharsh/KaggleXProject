@@ -240,7 +240,7 @@ def folder_selector():
     
 
      # Define the folder path based on the selected name
-    folder_path = os.path.join("KaggleXProjects\Concalls", selected_name)
+    folder_path = os.path.join("Concalls", selected_name)
     #print(folder_path)
     # List PDF files in the selected folder
     pdf_files_names = list_pdfs_in_folder(folder_path)
