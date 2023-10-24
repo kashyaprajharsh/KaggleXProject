@@ -28,7 +28,6 @@ from google.auth.transport.requests import Request
 import pandas as pd
 from google.cloud import storage
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 
 
 load_dotenv()
 
