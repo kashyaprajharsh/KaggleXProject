@@ -31,7 +31,7 @@ from st_files_connection import FilesConnection
 
 load_dotenv()
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"KaggleXProject/key.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"key.json"
 
 def get_pdf_text(pdf_docs):
     load_dotenv()
@@ -282,7 +282,7 @@ def folder_selector():
 
 def main():
     # Create API client.
-    SERVICE_ACCOUNT_KEY_FILE = "KaggleXProject/key.json"
+    SERVICE_ACCOUNT_KEY_FILE = r"key.json"
 # Create credentials using the service account JSON key file
     credentials = service_account.Credentials.from_service_account_file(
     SERVICE_ACCOUNT_KEY_FILE, scopes=["https://www.googleapis.com/auth/cloud-platform"])
