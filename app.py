@@ -31,7 +31,7 @@ from st_files_connection import FilesConnection
 
 load_dotenv()
 
-
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"C:\Users\ASUS\Downloads\key.json"
 
 def get_pdf_text(pdf_docs):
     load_dotenv()
@@ -282,11 +282,11 @@ def folder_selector():
 
 def main():
     # Create API client.
-    conn = st.experimental_connection('gcs', type=FilesConnection)
+    SERVICE_ACCOUNT_KEY_FILE = r"C:\Users\ASUS\Downloads\key.json"
+# Create credentials using the service account JSON key file
     credentials = service_account.Credentials.from_service_account_file(
-        conn, scopes=["https://www.googleapis.com/auth/cloud-platform"]
-    )
-    client = storage.Client(credentials=credentials)
+    SERVICE_ACCOUNT_KEY_FILE, scopes=["https://www.googleapis.com/auth/cloud-platform"])
+
 
     # Get an access token from the credentials
     credentials.refresh(Request())
