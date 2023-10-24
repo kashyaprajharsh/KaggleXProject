@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "ace-fiber-396314",
+  "private_key_id": "f088537898a335565dc4aaaaf6044b05cbf96e37",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDV93RIobLW5Aho\neHgx+GVfUEcqjxhpTxW9GsSvkrCvydhmwZbYlkgTI2ai+bqBMRe20erzMOVDotoo\nXD0PxtoMvDpE1Hftqp8w0gxWCuNmukj8VvqaRYltzqofrSs7PhIHPtVUN+1TsQk5\nUooxA0tckPiT3T38n4qmFw/HmmobkBjMmU+R9eIRRlLaeDQj26S02/bnpIF/06yq\nq2YOYAq5ItvUyzGG+pat8us7wqmwUJ14ZkznzqF4Va49DHe4i8sYB2ShrmJ/IqJp\ng0H33zRWyN7F3IjeabHAkvx8IhSD67sStcJYpOdt+CQCZGgaIQz4hd44MWZ48gJ9\nun0gMxNZAgMBAAECggEADWaElWHvKe85KZXV7UdBzhDgjCVPIZVO5ruM8vQMdc39\n7B2WvXTYCb7PWEisqhexhQUrolR/H1fNMvbn6huJn3+QZKwr4KotcyjMlfzzlgT3\nujoWUuAlBcgKNpapXPn7thF02ePwzKuLSNhHCF/M8fywXM5f6fjx/Yn3NoiQua4U\n1biZN08vkmLjk+24F8YkbzY7Z5RqgEU9qp64OzawxiYvYlx7FXfLMHvlWrUGY57B\nazAdo5EWTVK61Du4R3uA1kdn/AMeTewctBqj8iVvlkXiCdJvVAOoDYgHsKpzJ2Of\nvx/I8rUp+nOa/AESehYm0TubH+TW0LiYG0QNWgAhkwKBgQDtxKVq8+/Y9e5v8/NN\nqaH0ulvqe4crwZLm+Xgnc9Y6AHRkC2NF4WAspMiL9Tu+bc0TKIThloLPO+ZJU41m\nlUJzaaEcPUMkjKojfJR/LkV5JAMUWl3ceDek7epht5+20Ll3akU1QbFTftyuVW95\nCBKf6oQ61/HOr2JyJhSH9hQh8wKBgQDmX5ZnShQze61WFD/a0IgTADpXlzFR1Vii\nBl/RTavmz4L+WS2zdEaUDmY6EKV5fKJZUs9PtQs2qIV2wJwBkFLlfovQPY4+SaOG\nDa/bZ++B5d8f+sL9s9EPRlnRFIWe2yiWoGRSbjtqyx09wOltfFvlb+bb4jse0N0h\n5JCOp7x8gwKBgBnjr59VsGgPX0cRaQyry9a59Ag0KyO4kCZWQ58IHety4TmDg+u3\n/qDd0Hhs23SAwDO11cI6gUPPYePaFSt2VSX7+m74vLbeGiiDCChRAX+PTEaLEG1R\nKb3rqfm55MojMA6wo5iI7qYIyj6xTtH+7wg6oOtHWC0JK88CFno3cTnBAoGBAKFu\nMhLHEkjRTbGYFvbaUcAe1MM0K1dQzP8cwGAGsYLXvs9E5oVt4Vc2j+P4bjwnXgyB\nvsv37Zerl3qTlb5yx+QRPR/7QoXbTD9Pr/9rYaYA0s2yBpmJO+IcRiwA2XFr2ZFT\na3lnzTMUibUQTYJvNmYceAV1DkCV059AbxvH5ojJAoGAUnBuFtN7ZpifDrc6k3WS\nRvgoJUfPD9RxH6RK+wKkSsFksSTdj3yfc0H0PPT8ISt9/GhEcZPysvvxOqeTqSyU\ncKFJ7EPm7y+kWwtAuBrNeF/Y2Y18VySzQu+5euPga+5MW/RdW8rkfWwUB0vJicPM\ncA1L0DMVkijfBihQEAdM6UA=\n-----END PRIVATE KEY-----\n",
+  "client_email": "kagglefinpro@ace-fiber-396314.iam.gserviceaccount.com",
+  "client_id": "118406073905731941258",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/kagglefinpro%40ace-fiber-396314.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
