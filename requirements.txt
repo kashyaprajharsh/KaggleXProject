@@ -13,3 +13,5 @@ huggingface_hub
 gcsfs
 google-cloud-aiplatform  
 google-api-python-client
+st-files-connection
+gcsfs
