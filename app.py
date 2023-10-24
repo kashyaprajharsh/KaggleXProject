@@ -31,7 +31,7 @@ from st_files_connection import FilesConnection
 
 load_dotenv()
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"C:\Users\ASUS\Downloads\key.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"KaggleXProject/key.json"
 
 def get_pdf_text(pdf_docs):
     load_dotenv()
@@ -240,7 +240,7 @@ def folder_selector():
     
 
      # Define the folder path based on the selected name
-    folder_path = os.path.join("E:\KaggleXProjects\Concalls", selected_name)
+    folder_path = os.path.join("KaggleXProjects\Concalls", selected_name)
     #print(folder_path)
     # List PDF files in the selected folder
     pdf_files_names = list_pdfs_in_folder(folder_path)
@@ -282,7 +282,7 @@ def folder_selector():
 
 def main():
     # Create API client.
-    SERVICE_ACCOUNT_KEY_FILE = r"C:\Users\ASUS\Downloads\key.json"
+    SERVICE_ACCOUNT_KEY_FILE = r"KaggleXProject/key.json"
 # Create credentials using the service account JSON key file
     credentials = service_account.Credentials.from_service_account_file(
     SERVICE_ACCOUNT_KEY_FILE, scopes=["https://www.googleapis.com/auth/cloud-platform"])
