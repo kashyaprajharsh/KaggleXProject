@@ -283,7 +283,7 @@ def folder_selector():
 def main():
     # Create API client.
     credentials = service_account.Credentials.from_service_account_info(
-        st.secrets["gcs"]
+        st.secrets["connections.gcs"]
     )
     client = storage.Client(credentials=credentials)
 
